@@ -16,7 +16,7 @@ data class JobResponse(
     // TODO: To enum
     val status: String,
 
-    val name: String,
+    val name: String?,
 
     val startedAt: String?,
 

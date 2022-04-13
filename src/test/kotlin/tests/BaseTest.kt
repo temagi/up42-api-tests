@@ -1,5 +1,6 @@
 package tests
 
+import config.RestAssuredListener
 import helpers.WorkflowUtils.addWorkflowTasks
 import helpers.WorkflowUtils.createAndRunJob
 import helpers.WorkflowUtils.createWorkflow
@@ -8,6 +9,7 @@ import helpers.WorkflowUtils.getJob
 import helpers.WorkflowUtils.getWorkflow
 import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.framework.concurrency.FixedInterval
 import io.kotest.framework.concurrency.eventually
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -22,6 +24,8 @@ import models.Sharpening
 @ExperimentalKotest
 class BaseTest : DescribeSpec({
     RestAssured.enableLoggingOfRequestAndResponseIfValidationFails()
+
+    extension(RestAssuredListener)
 
     describe("check MODIS workflow") {
         var token = ""
@@ -89,8 +93,11 @@ class BaseTest : DescribeSpec({
                 val createdJob = createAndRunJob(token, createdWorkflow.id, job)
 
                 it("Retrieving job and check status is SUCCEEDED") {
-                    eventually(20000) {
-                        val getJob = getJob(token, createdWorkflow.id, createdJob.id)
+                    eventually({
+                        duration = 1200000
+                        interval = FixedInterval(3000)
+                    }) {
+                        val getJob = getJob(token, createdJob.id)
                         getJob.status shouldBe "SUCCEEDED"
                     }
                 }

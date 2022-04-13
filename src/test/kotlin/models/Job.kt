@@ -6,7 +6,7 @@ data class Job(
     @JsonProperty("nasa-modis:1")
     val nasaModis: Pleiades,
 
-    @JsonProperty("pansharpen:1")
+    @JsonProperty("sharpening:1")
     val sharpening: Sharpening
 )
 

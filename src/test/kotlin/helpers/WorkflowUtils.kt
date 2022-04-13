@@ -64,10 +64,11 @@ object WorkflowUtils {
     }
 
     fun createAndRunJob(token: String, workflowId: String, job: Job): JobResponse {
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails()
         return RestAssured.given()
             .header("Content-type", "application/json")
             .header("Authorization", token)
-        .body(job)
+            .body(job)
             .`when`()
         .post("https://api.up42.com/projects/286b4323-7b05-4e43-9c08-689bac15801b/workflows/${workflowId}/jobs/")
             .then()
@@ -78,12 +79,12 @@ object WorkflowUtils {
             .getObject("data", JobResponse::class.java)
     }
 
-    fun getJob(token: String, workflowId: String, jobId: String): JobResponse {
+    fun getJob(token: String, jobId: String): JobResponse {
         return RestAssured.given()
             .header("Content-type", "application/json")
             .header("Authorization", token)
         .`when`()
-            .get("https://api.up42.com/projects/286b4323-7b05-4e43-9c08-689bac15801b/workflows/${workflowId}/tasks/")
+            .get("https://api.up42.com/projects/286b4323-7b05-4e43-9c08-689bac15801b/jobs/${jobId}")
         .then()
             .statusCode(200)
             .extract()
