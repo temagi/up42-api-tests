@@ -68,7 +68,7 @@ class BaseTest : DescribeSpec({
                     Task("sharpening:1", "nasa-modis:1", "e374ea64-dc3b-4500-bb4b-974260fb203e")
                 )
 
-                val createdTasks = addWorkflowTasks(token, createdWorkflow.id, tasks)
+                addWorkflowTasks(token, createdWorkflow.id, tasks)
             }
 
             it("Create and run job") {
@@ -94,7 +94,7 @@ class BaseTest : DescribeSpec({
 
                 it("Retrieving job and check status is SUCCEEDED") {
                     eventually({
-                        duration = 1200000
+                        duration = 600000
                         interval = FixedInterval(3000)
                     }) {
                         val getJob = getJob(token, createdJob.id)
