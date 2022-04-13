@@ -30,10 +30,12 @@ class BaseTest : DescribeSpec({
     describe("check MODIS workflow") {
         var token = ""
         it("get valid token") {
+            // TODO: Move token generation to external function
             val auth = RestAssured.given()
                 .contentType("application/x-www-form-urlencoded")
                 .formParam("grant_type", "client_credentials")
                 .`when`()
+                // TODO: Move credentials to secret
                 .post("https://286b4323-7b05-4e43-9c08-689bac15801b:e3gPtegq.rRmLWWeUwbuxjwyc82QB1HwQhMgdY27AgIl@api.up42.com/oauth/token")
                 .then()
                 .statusCode(200)

@@ -1,7 +1,12 @@
 package helpers
 
 import io.restassured.RestAssured
-import models.*
+import models.GetWorkflowResponse
+import models.Job
+import models.JobResponse
+import models.Task
+import models.TaskResponse
+import models.Workflow
 
 object WorkflowUtils {
     fun createWorkflow(token: String, workflow: Workflow): GetWorkflowResponse {
@@ -11,7 +16,7 @@ object WorkflowUtils {
             .header("Authorization", token)
             .body(workflow)
             .`when`()
-            .post("https://api.up42.com/projects/286b4323-7b05-4e43-9c08-689bac15801b/workflows/")
+            .post("/projects/286b4323-7b05-4e43-9c08-689bac15801b/workflows/")
             .then()
             .statusCode(200)
             .extract()
@@ -26,7 +31,7 @@ object WorkflowUtils {
             .header("Content-type", "application/json")
             .header("Authorization", token)
             .`when`()
-            .delete("https://api.up42.com/projects/286b4323-7b05-4e43-9c08-689bac15801b/workflows/$workflowId")
+            .delete("/projects/286b4323-7b05-4e43-9c08-689bac15801b/workflows/$workflowId")
             .then()
             .statusCode(statusCode)
     }
@@ -37,7 +42,7 @@ object WorkflowUtils {
             .header("Content-type", "application/json")
             .header("Authorization", token)
             .`when`()
-            .get("https://api.up42.com/projects/286b4323-7b05-4e43-9c08-689bac15801b/workflows/$workflowId")
+            .get("/projects/286b4323-7b05-4e43-9c08-689bac15801b/workflows/$workflowId")
             .then()
             .statusCode(200)
             .extract()
@@ -52,7 +57,7 @@ object WorkflowUtils {
             .header("Authorization", token)
             .body(tasks)
             .`when`()
-            .post("https://api.up42.com/projects/286b4323-7b05-4e43-9c08-689bac15801b/workflows/$workflowId/tasks/")
+            .post("/projects/286b4323-7b05-4e43-9c08-689bac15801b/workflows/$workflowId/tasks/")
             .then()
             .statusCode(200)
             .extract()
@@ -70,7 +75,7 @@ object WorkflowUtils {
             .header("Authorization", token)
             .body(job)
             .`when`()
-            .post("https://api.up42.com/projects/286b4323-7b05-4e43-9c08-689bac15801b/workflows/$workflowId/jobs/")
+            .post("/projects/286b4323-7b05-4e43-9c08-689bac15801b/workflows/$workflowId/jobs/")
             .then()
             .statusCode(200)
             .extract()
@@ -84,7 +89,7 @@ object WorkflowUtils {
             .header("Content-type", "application/json")
             .header("Authorization", token)
             .`when`()
-            .get("https://api.up42.com/projects/286b4323-7b05-4e43-9c08-689bac15801b/jobs/$jobId")
+            .get("/projects/286b4323-7b05-4e43-9c08-689bac15801b/jobs/$jobId")
             .then()
             .statusCode(200)
             .extract()
