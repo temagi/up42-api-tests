@@ -13,7 +13,7 @@ object RestAssuredListener : BeforeSpecListener {
     override suspend fun beforeSpec(spec: Spec) {
         // TODO: As a temporary solution, could be removed for a real project
         RestAssured.config = RestAssuredConfig.config().objectMapperConfig(
-            objectMapperConfig().jackson2ObjectMapperFactory { cls, charset ->
+            objectMapperConfig().jackson2ObjectMapperFactory { _, _ ->
                 val mapper: JsonMapper = JsonMapper.builder()
                     .findAndAddModules()
                     .build()
