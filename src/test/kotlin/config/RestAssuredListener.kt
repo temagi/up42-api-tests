@@ -9,17 +9,18 @@ import io.restassured.builder.RequestSpecBuilder
 import io.restassured.config.ObjectMapperConfig.objectMapperConfig
 import io.restassured.config.RestAssuredConfig
 
-
 object RestAssuredListener : BeforeSpecListener {
     override suspend fun beforeSpec(spec: Spec) {
         // TODO: As a temporary solution, could be removed for a real project
-        RestAssured.config = RestAssuredConfig.config().objectMapperConfig(objectMapperConfig().jackson2ObjectMapperFactory { cls, charset ->
-            val mapper: JsonMapper = JsonMapper.builder()
-                .findAndAddModules()
-                .build()
-            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-            mapper
-        })
+        RestAssured.config = RestAssuredConfig.config().objectMapperConfig(
+            objectMapperConfig().jackson2ObjectMapperFactory { cls, charset ->
+                val mapper: JsonMapper = JsonMapper.builder()
+                    .findAndAddModules()
+                    .build()
+                mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                mapper
+            }
+        )
 
         RestAssured.requestSpecification = RequestSpecBuilder()
             .build()

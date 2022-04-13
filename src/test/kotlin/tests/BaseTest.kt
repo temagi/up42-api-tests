@@ -15,11 +15,11 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.restassured.RestAssured
 import models.AuthResponse
-import models.Workflow
 import models.Job
-import models.Task
 import models.Pleiades
 import models.Sharpening
+import models.Task
+import models.Workflow
 
 @ExperimentalKotest
 class BaseTest : DescribeSpec({
